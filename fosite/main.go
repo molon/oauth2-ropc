@@ -1,0 +1,72 @@
+package main
+
+import (
+	"crypto/rand"
+	"crypto/rsa"
+	"log"
+	"net/http"
+	"time"
+
+	"github.com/ory/fosite"
+	"github.com/ory/fosite/compose"
+	"github.com/ory/fosite/storage"
+)
+
+func main() {
+	store := storage.NewExampleStore()
+
+	// Configure the strategy and key
+	config := &fosite.Config{
+		AccessTokenLifespan: time.Hour,
+		IDTokenLifespan:     time.Hour,
+		GlobalSecret:        []byte("some-cool-secret-that-is-32bytes"),
+		RefreshTokenScopes:  []string{}, // or set accessRequest.GrantScope("offline")
+	}
+
+	// privateKey is used to sign JWT tokens. The default strategy uses RS256 (RSA Signature with SHA-256)
+	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
+	if err != nil {
+		panic(err)
+	}
+
+	// Create a new Fosite instance
+	oauth2Provider := compose.ComposeAllEnabled(config, store, privateKey)
+
+	http.HandleFunc("/token", func(w http.ResponseWriter, r *http.Request) {
+		// This context will be passed to all methods.
+		ctx := r.Context()
+
+		// Parse request
+		mySessionData := new(fosite.DefaultSession)
+		accessRequest, err := oauth2Provider.NewAccessRequest(ctx, r, mySessionData)
+		if err != nil {
+			oauth2Provider.WriteAccessError(ctx, w, accessRequest, err)
+			return
+		}
+
+		// Create access token
+		response, err := oauth2Provider.NewAccessResponse(ctx, accessRequest)
+		if err != nil {
+			oauth2Provider.WriteAccessError(ctx, w, accessRequest, err)
+			return
+		}
+		log.Printf("%+#v", response)
+
+		// Send response
+		oauth2Provider.WriteAccessResponse(ctx, w, accessRequest, response)
+	})
+
+	// Start HTTP server
+	log.Println("Server is running at http://localhost:3847")
+	log.Fatal(http.ListenAndServe(":3847", nil))
+	/*
+		curl -X POST http://localhost:3847/token \
+		  -H "Content-Type: application/x-www-form-urlencoded" \
+		  -d "grant_type=password" \
+		  -d "client_id=my-client" \
+		  -d "client_secret=foobar" \
+		  -d "username=peter" \
+		  -d "password=secret" \
+		  -d "scope=fosite"
+	*/
+}
