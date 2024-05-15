@@ -34,7 +34,6 @@ func main() {
 	oauth2Provider := compose.ComposeAllEnabled(config, store, privateKey)
 
 	http.HandleFunc("/token", func(w http.ResponseWriter, r *http.Request) {
-		// This context will be passed to all methods.
 		ctx := r.Context()
 
 		// Parse request
