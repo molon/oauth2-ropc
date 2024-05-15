@@ -86,4 +86,7 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace github.com/ory/fosite => ../../ory/fosite
+// go get -u github.com/molon/fosite@master
+replace github.com/ory/fosite => github.com/molon/fosite v0.0.0-20240515161656-72f39746cd2e
+
+// replace github.com/ory/fosite => ../../molon/fosite

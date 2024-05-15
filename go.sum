@@ -314,6 +314,8 @@ github.com/mitchellh/reflectwalk v1.0.2 h1:G2LzWKi524PWgd3mLHV8Y5k7s6XUvT0Gef6zx
 github.com/mitchellh/reflectwalk v1.0.2/go.mod h1:mSTlrgnPZtwu0c4WaC2kGObEpuNDbx0jmZXqmk4esnw=
 github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826 h1:RWengNIwukTxcDr9M+97sNutRR1RKhG96O6jWumTTnw=
 github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826/go.mod h1:TaXosZuwdSHYgviHp1DAtfrULt5eUgsSMsZf+YrPgl8=
+github.com/molon/fosite v0.0.0-20240515161656-72f39746cd2e h1:0Iqh3Te+tG8zMfFmkylOqfgCFyaqX0s4YCpz4RPa9Yc=
+github.com/molon/fosite v0.0.0-20240515161656-72f39746cd2e/go.mod h1:1L248mlkShpxI2qi2RABiEtf86jFH414HvAERTpgEWM=
 github.com/nyaruka/phonenumbers v1.1.1 h1:fyoZmpLN2VCmAnc51XcrNOUVP2wT1ZzQl348ggIaXII=
 github.com/nyaruka/phonenumbers v1.1.1/go.mod h1:cGaEsOrLjIL0iKGqJR5Rfywy86dSkbApEpXuM9KySNA=
 github.com/oleiade/reflections v1.0.1 h1:D1XO3LVEYroYskEsoSiGItp9RUxG6jWnCVvrqH0HHQM=
